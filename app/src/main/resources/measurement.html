@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Messung</title>
+</head>
+<body>
+    <div id="sensor1"></div>
+    <div id="sensor2"></div>
+    <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        const sensor1UI = document.querySelector('#sensor1');
+        const sensor2UI = document.querySelector('#sensor2');
+
+        let request = new XMLHttpRequest();
+        request.open('GET', '192.168.178.46:4444/data');
+
+        async function refreshUi() {
+            while (true) {
+                fetch('/measurement').then(function(response) {
+                    response.text().then(function(text) {
+                        sensor1UI.textContent = JSON.parse(text).sensor1;
+                        sensor2UI.textContent = JSON.parse(text).sensor2;
+                    });
+                });
+
+                await sleep(2000);
+            }
+        }
+
+        refreshUi();
+    </script>
+</body>
+</html>
