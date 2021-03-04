@@ -34,10 +34,20 @@ compileJava {
 
 application {
     // Define the main class for the application.
-    mainClass = 'de.brewy.App'
+    mainClass = 'de.brewy.Application'
 }
 
 tasks.named('test') {
     // Use junit platform for unit tests.
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "de.brewy.Application"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
