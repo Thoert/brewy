@@ -1,32 +1,28 @@
 package de.brewy;
 
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-import de.brewy.servlets.MeasurementServlet;
-import de.brewy.servlets.UiServlet;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.servlet.ServletContextHandler;
+import java.util.concurrent.Callable;
 
-public class Application {
+@Command(name = "brewy")
+public class Application implements Callable<Integer> {
 
-    public static void main(String... args){
-        Server server = new Server();
+    @Option(names = "--port", required = true, description = "application port")
+    private Integer port;
 
-        ServerConnector connector = new ServerConnector(server);
-        connector.setPort(4444);
+    public static void main(String... args) {
+        Application application = new Application();
 
-        server.addConnector(connector);
+        new CommandLine(application).execute(args);
 
-        ServletContextHandler servletContextHandler = new ServletContextHandler();
-        servletContextHandler.addServlet(MeasurementServlet.class, "/measurement/*");
-        servletContextHandler.addServlet(UiServlet.class, "/ui/*");
+        JettyServer jettyServer = new JettyServer();
+        jettyServer.start(application.port);
+    }
 
-        server.setHandler(servletContextHandler);
-
-        try {
-            server.start();
-        } catch (Exception exception) {
-            System.err.println(exception.getMessage());
-        }
+    @Override
+    public Integer call() {
+        return 0;
     }
 }

@@ -1,0 +1,17 @@
+body {
+    background: black;
+}
+
+.sensor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px;
+    padding: 30px;
+    border: black;
+    border-color: green;
+    border-style: solid;
+    font-weight: bolder;
+    font-size: 100px;
+    color: green;
+}

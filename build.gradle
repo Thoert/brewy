@@ -26,6 +26,7 @@ dependencies {
 
     implementation 'org.eclipse.jetty:jetty-server:11.0.1'
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.1'
+    implementation 'info.picocli:picocli:4.6.1'
 }
 
 compileJava {
