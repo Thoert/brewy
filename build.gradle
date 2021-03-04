@@ -11,9 +11,6 @@ plugins {
     id 'application'
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
-
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
@@ -29,6 +26,10 @@ dependencies {
 
     implementation 'org.eclipse.jetty:jetty-server:11.0.1'
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.1'
+}
+
+compileJava {
+    options.release = 11
 }
 
 application {
